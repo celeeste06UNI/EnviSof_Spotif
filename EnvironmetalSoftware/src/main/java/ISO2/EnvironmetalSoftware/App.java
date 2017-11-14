@@ -8,10 +8,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello Mari!, Albertojbgdfg" );
-        System.out.println( "marian moreno679" );
-        System.out.println( "C" );
-        System.out.println("Antonio");
-        System.out.println("Prueba development");
+        System.out.println("Prueba Features");
     }
 }
