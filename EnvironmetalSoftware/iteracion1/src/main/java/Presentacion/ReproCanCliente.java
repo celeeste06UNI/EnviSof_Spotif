@@ -1,5 +1,7 @@
 package Presentacion;
 
+import Dominio.ReproCanServidor;
+
 public class ReproCanCliente {
 	private String cancion;
 	
@@ -11,6 +13,7 @@ public class ReproCanCliente {
 
 
 	public void reproducirCancion(String cancion) {
+		ReproCanServidor rs = new ReproCanServidor(cancion);
 		
 	}
 	

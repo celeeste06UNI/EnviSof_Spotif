@@ -1,22 +1,17 @@
 package Dominio;
 
 public class ReproCanServidor {
-	private int numero;
+	private String cancion;
 	
-	public ReproCanServidor(int numero) {
+	public ReproCanServidor(String cancion) {
 		super();
-		this.numero = numero;
+		this.cancion = cancion;
+		reproducirCancion(cancion);
 	}
 
-	public int getNumero() {
-		return numero;
-	}
 
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
-
-	public void reproducirCancion() {
+	public void reproducirCancion(String cancion) {
+		ReproCanServidor rs = new ReproCanServidor(cancion);
 		
 	}
 	
