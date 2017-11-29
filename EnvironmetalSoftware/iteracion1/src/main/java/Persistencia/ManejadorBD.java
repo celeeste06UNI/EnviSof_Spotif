@@ -1,4 +1,4 @@
-package ISO2.EnvironmetalSoftware;
+package Persistencia;
 
 
 import java.sql.Connection;
@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class App {
-    public static void main(String[] args) throws SQLException {
-        try {
+public class ManejadorBD {
+	
+    public String ReproducirCancionesS(String titulo) {
+    	String tituloResBBDD = "";
+    	try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/spotif", "root", "");
             Statement st = conexion.createStatement();
@@ -39,6 +41,8 @@ public class App {
             System.out.println("Error: Varios.");
             System.out.println("SQLException: " + s.getMessage());
         }
+    	
+    	return tituloResBBDD;
+    	
     }
 }
-
