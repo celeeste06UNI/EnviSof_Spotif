@@ -9,40 +9,45 @@ import java.sql.Statement;
 
 public class ManejadorBD {
 	
-    public String ReproducirCancionesS(String titulo) {
-    	String tituloResBBDD = "";
+	private Connection conexion;
+	
+    public boolean conexion() {
+    	boolean controlConexion= false;
     	try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/spotif", "root", "");
-            Statement st = conexion.createStatement();
-            
-            ResultSet rs = st.executeQuery("SELECT * FROM canciones;");
- 
-            if (rs != null) {
-                System.out.println("El listado de la tabla clientes es:");
- 
-                while (rs.next()) {
-                    System.out.println("  ID cancion: " + rs.getObject("id_cancion"));
-                    System.out.println("  Titulo: " + rs.getObject("titulo"));
-                    System.out.println("  ID album: " + rs.getObject("id_album"));
-                }
-                rs.close();
-            }
-            st.close();
- 
+            this.conexion = DriverManager.getConnection("jdbc:mysql://localhost/spotif", "root", "");
+        
+            controlConexion = true;
+          
+        }catch(SQLException s){
+        	controlConexion = false;
+
+        }catch(Exception s){
+        	controlConexion = false;
         }
-        catch(SQLException s)
-        {
-            System.out.println("Error: SQL.");
-            System.out.println("SQLException: " + s.getMessage());
-        }
-        catch(Exception s)
-        {
-            System.out.println("Error: Varios.");
-            System.out.println("SQLException: " + s.getMessage());
-        }
-    	
-    	return tituloResBBDD;
-    	
+  
+    	return controlConexion;
     }
+    
+    public ResultSet leer(String SQLquery){
+    	
+   	 	Statement st;
+   	 	ResultSet rs = null;
+   	 	
+		try {
+			st = conexion.createStatement();
+			rs = st.executeQuery("SELECT * FROM canciones;");
+			
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+   	return rs;
+   }
+    
+
+
+    
 }

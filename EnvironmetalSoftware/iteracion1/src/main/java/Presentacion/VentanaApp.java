@@ -1,5 +1,6 @@
 package Presentacion;
 
+import Dominio.GestorCancion;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -62,7 +63,7 @@ public class VentanaApp {
 		JPanel Streaming = new JPanel();
 		tabbedPane.addTab("Streaming", null, Streaming, null);
 		GridBagLayout gbl_Streaming = new GridBagLayout();
-		gbl_Streaming.columnWidths = new int[]{215, 0, 0, 0, 0};
+		gbl_Streaming.columnWidths = new int[]{215, 0, 0, 150, 0};
 		gbl_Streaming.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_Streaming.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_Streaming.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -75,14 +76,9 @@ public class VentanaApp {
 		gbc_lblCanciones.gridy = 0;
 		Streaming.add(lblCanciones, gbc_lblCanciones);
 		
-		JTextArea textArea = new JTextArea();
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.gridwidth = 2;
-		gbc_textArea.insets = new Insets(0, 0, 5, 5);
-		gbc_textArea.fill = GridBagConstraints.BOTH;
-		gbc_textArea.gridx = 0;
-		gbc_textArea.gridy = 1;
-		Streaming.add(textArea, gbc_textArea);
+		
+		
+
 		
 		JButton btnReproducir = new JButton("Reproducir");
 		GridBagConstraints gbc_btnReproducir = new GridBagConstraints();
@@ -93,6 +89,45 @@ public class VentanaApp {
 		
 		JPanel Local = new JPanel();
 		tabbedPane.addTab("Local", null, Local, null);
+		
+		conexion(Streaming);
+		mostrarCancionesS(Streaming);
+		
+		
+		
+	}
+	
+	public void conexion(JPanel streaming) {
+		boolean controlConexion;
+		JLabel label = new JLabel("");
+		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.anchor = GridBagConstraints.WEST;
+		gbc_label.insets = new Insets(0, 0, 0, 5);
+		gbc_label.gridx = 0;
+		gbc_label.gridy = 3;
+		streaming.add(label, gbc_label);
+		GestorCancion gesCan = new GestorCancion();
+		controlConexion = gesCan.conexion();
+		if(controlConexion) {
+			label.setText("Conectado");
+		}else {
+			label.setText("Conectado");
+		}
+	}
+	
+	public void mostrarCancionesS(JPanel streaming) {
+		GestorCancion gesCan = new GestorCancion();
+		
+		JTextArea textArea = new JTextArea();
+		GridBagConstraints gbc_textArea = new GridBagConstraints();
+		gbc_textArea.gridwidth = 2;
+		gbc_textArea.insets = new Insets(0, 0, 5, 5);
+		gbc_textArea.fill = GridBagConstraints.BOTH;
+		gbc_textArea.gridx = 0;
+		gbc_textArea.gridy = 1;
+		streaming.add(textArea, gbc_textArea);
+		textArea.setText("La bicicleta");
+		gesCan.cancionesBBDD();
 	}
 
 }
