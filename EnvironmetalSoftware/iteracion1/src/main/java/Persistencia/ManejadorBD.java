@@ -9,14 +9,14 @@ import java.sql.Statement;
 
 public class ManejadorBD {
 	
-	private Connection conexion;
+	private Connection conexion = null;
+
 	
     public boolean conexion() {
     	boolean controlConexion= false;
     	try {
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion = DriverManager.getConnection("jdbc:mysql://localhost/spotif", "root", "");
-        
             controlConexion = true;
           
         }catch(SQLException s){
@@ -29,25 +29,23 @@ public class ManejadorBD {
     	return controlConexion;
     }
     
-    public ResultSet leer(String SQLquery){
+    public ResultSet leer(String SQLquery) throws SQLException{
     	
-   	 	Statement st;
-   	 	ResultSet rs = null;
-   	 	
-		try {
-			st = conexion.createStatement();
-			rs = st.executeQuery("SELECT * FROM canciones;");
-			
-			
-		} catch (SQLException e) {
+    	Statement comando = null;    
+    	ResultSet resultados = null;
+   
+            try {
+            	comando = conexion.createStatement();            
+                resultados = comando.executeQuery(SQLquery);
+                
+            } catch (SQLException e) {            
+                e.printStackTrace();            
+                throw e;
+            }
+            
+            return resultados;
+    }
 
-			e.printStackTrace();
-		}
-		
-   	return rs;
-   }
-    
-
-
+   
     
 }
