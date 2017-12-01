@@ -34,6 +34,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class VentanaApp {
 
@@ -73,11 +75,14 @@ public class VentanaApp {
 	 */
 	private void initialize() throws SQLException {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 488, 353);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaApp.class.getResource("/Presentacion/music.png")));
+		frame.setBounds(100, 100, 500, 353);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JLabel lblSpotif = new JLabel("SPOTIF");
-		lblSpotif.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSpotif.setForeground(new Color(128, 0, 0));
+		lblSpotif.setIcon(new ImageIcon(VentanaApp.class.getResource("/Presentacion/music.png")));
+		lblSpotif.setFont(new Font("Segoe UI Semibold", Font.BOLD | Font.ITALIC, 25));
 		lblSpotif.setHorizontalAlignment(SwingConstants.CENTER);
 		frame.getContentPane().add(lblSpotif, BorderLayout.NORTH);
 
@@ -88,7 +93,7 @@ public class VentanaApp {
 		tabbedPane.addTab("Streaming", null, Streaming, null);
 		GridBagLayout gbl_Streaming = new GridBagLayout();
 		gbl_Streaming.columnWidths = new int[] { 164, 104, 38, 70, 89, 0 };
-		gbl_Streaming.rowHeights = new int[] { 36, 48, 111, 0, 41, 0 };
+		gbl_Streaming.rowHeights = new int[] { 30, 46, 111, 0, 41, 0 };
 		gbl_Streaming.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_Streaming.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		Streaming.setLayout(gbl_Streaming);
@@ -134,8 +139,8 @@ public class VentanaApp {
 		panel.add(lblNewLabel);
 		
 				
-
 		JButton btnReproducir = new JButton("Play");
+		btnReproducir.setIcon(new ImageIcon(VentanaApp.class.getResource("/Presentacion/play.png")));
 		btnReproducir.setEnabled(false);
 
 		GridBagConstraints gbc_btnReproducir = new GridBagConstraints();
@@ -148,28 +153,15 @@ public class VentanaApp {
 		tabbedPane.addTab("Local", null, Local, null);
 
 		conexion(Streaming);
-		mostrarCancionesS(Streaming , btnReproducir, lblNewLabel);
+		mostrarCancionesS(Streaming , btnReproducir,lblNewLabel);
+		
 
 	}
 
 	public void conexion(JPanel streaming) throws SQLException {
 		boolean controlConexion;
 		
-		JButton btnReplay = new JButton("Replay");
-		btnReplay.setEnabled(false);
-		GridBagConstraints gbc_btnReplay = new GridBagConstraints();
-		gbc_btnReplay.insets = new Insets(0, 0, 5, 5);
-		gbc_btnReplay.gridx = 3;
-		gbc_btnReplay.gridy = 3;
-		Streaming.add(btnReplay, gbc_btnReplay);
 		
-		JButton btnPause = new JButton("Pause");
-		btnPause.setEnabled(false);
-		GridBagConstraints gbc_btnPause = new GridBagConstraints();
-		gbc_btnPause.insets = new Insets(0, 0, 5, 0);
-		gbc_btnPause.gridx = 4;
-		gbc_btnPause.gridy = 3;
-		Streaming.add(btnPause, gbc_btnPause);
 		JLabel label = new JLabel("");
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.anchor = GridBagConstraints.WEST;
@@ -193,15 +185,6 @@ public class VentanaApp {
 		ArrayList<Cancion> canciones = new ArrayList();
 		canciones = gesCan.cancionesBBDD();
 		
-		final JTextArea textArea = new JTextArea();
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.gridwidth = 2;
-		gbc_textArea.insets = new Insets(0, 0, 5, 5);
-		gbc_textArea.fill = GridBagConstraints.BOTH;
-		gbc_textArea.gridx = 1;
-		gbc_textArea.gridy = 1;
-		streaming.add(textArea, gbc_textArea);
-
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 2;
@@ -221,9 +204,51 @@ public class VentanaApp {
 		for (i = 0; i < canciones.size(); i++) {
 			modeloLista.addElement(canciones.get(i).getTitulo());
 		}
+		
+		
+		mostrarDatosCanciones(streaming, modeloLista, list, btnReproducir, lblNewLabel);
+		
 
-		// System.out.println(modeloLista.get(arg0.getPoint()));
+	}
 
+	public void mostrarDatosCanciones(JPanel streaming,  final DefaultListModel modeloLista, final JList list, final JButton btnReproducir, final JLabel lblNewLabel) throws SQLException {
+		
+		final JTextArea textArea = new JTextArea();
+		GridBagConstraints gbc_textArea = new GridBagConstraints();
+		gbc_textArea.gridwidth = 2;
+		gbc_textArea.insets = new Insets(0, 0, 5, 5);
+		gbc_textArea.fill = GridBagConstraints.BOTH;
+		gbc_textArea.gridx = 1;
+		gbc_textArea.gridy = 1;
+		streaming.add(textArea, gbc_textArea);
+		
+		final JButton btnReplay = new JButton("Replay");
+		
+		btnReplay.setIcon(new ImageIcon(VentanaApp.class.getResource("/Presentacion/play.png")));
+		btnReplay.setEnabled(false);
+		GridBagConstraints gbc_btnReplay = new GridBagConstraints();
+		gbc_btnReplay.insets = new Insets(0, 0, 5, 5);
+		gbc_btnReplay.gridx = 3;
+		gbc_btnReplay.gridy = 3;
+		Streaming.add(btnReplay, gbc_btnReplay);
+		
+		final JButton btnPause = new JButton("Pause");
+		btnPause.setIcon(new ImageIcon(VentanaApp.class.getResource("/Presentacion/pause.png")));
+		btnPause.setEnabled(false);
+		GridBagConstraints gbc_btnPause = new GridBagConstraints();
+		gbc_btnPause.insets = new Insets(0, 0, 5, 0);
+		gbc_btnPause.gridx = 4;
+		gbc_btnPause.gridy = 3;
+		Streaming.add(btnPause, gbc_btnPause);
+		
+		final JButton btnSalir = new JButton("Cerrar");
+		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
+		gbc_btnSalir.gridwidth = 2;
+		gbc_btnSalir.insets = new Insets(0, 0, 0, 5);
+		gbc_btnSalir.gridx = 3;
+		gbc_btnSalir.gridy = 4;
+		Streaming.add(btnSalir, gbc_btnSalir);
+		
 		MouseListener mouseListener = new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				ArrayList<Cancion> canciones = new ArrayList();
@@ -231,7 +256,6 @@ public class VentanaApp {
 				int posicion = 0;
 				if (e.getClickCount() == 2) {
 					posicion = list.locationToIndex(e.getPoint());
-					System.out.println(posicion);
 
 					try {
 						canciones = gesCan.cancionesBBDD();
@@ -239,17 +263,22 @@ public class VentanaApp {
 							String Titulo = (String) modeloLista.getElementAt(posicion);
 
 							if (canciones.get(i).getTitulo().equals(Titulo)) {
-								System.out.println(Titulo);
-								System.out.println(canciones.get(i).getTitulo());
+							
 								textArea.setText("Nombre: " + canciones.get(i).getTitulo() + "\n" + "Precio:" + canciones.get(i).getPrecio() + " €");
 								btnReproducir.setEnabled(true);
 								btnReproducir.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent arg0) {
 										lblNewLabel.setText("REPRODUCIENDO");
+										btnPause.setEnabled(true);
+										
+										
 
 									}
 								});
 								
+								clickPause(btnPause, lblNewLabel, btnReplay);
+								clickReplay(btnReplay, lblNewLabel, btnPause);
+								clickCerrar(btnSalir, lblNewLabel,btnReplay,btnPause);
 							}
 
 						}
@@ -262,11 +291,44 @@ public class VentanaApp {
 			}
 		};
 		list.addMouseListener(mouseListener);
-
+		
 	}
-
-	public void mostrarDatosCanciones(JPanel streaming) throws SQLException {
-
+	
+	public void clickPause(final JButton btnPause, final JLabel lblNewLabel, final JButton btnReplay) {
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnPause.setEnabled(false);
+				lblNewLabel.setText("CANCION EN PAUSE");
+				btnReplay.setEnabled(true);
+				
+			}
+		});
+		
 	}
+	
+	public void clickReplay(final JButton btnReplay, final JLabel lblNewLabel, final JButton btnPause) {
+		btnReplay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lblNewLabel.setText("REPRODUCIENDO");
+				btnReplay.setEnabled(false);
+				btnPause.setEnabled(true);
+			}
+			
+		});
+		
+	}
+	
+	public void clickCerrar(JButton btnSalir, final JLabel lblNewLabel, final JButton btnReplay, final JButton btnPause) {
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lblNewLabel.setText("");
+				btnReplay.setEnabled(false);
+				btnPause.setEnabled(false);
+			}
+		});
+	}
+	
+	
+	
 
 }
