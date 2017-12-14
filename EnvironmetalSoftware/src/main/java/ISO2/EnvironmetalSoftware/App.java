@@ -11,7 +11,7 @@ public class App {
     public static void main(String[] args) throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://172.19.149.36/spotif", "root", "");
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/spotif", "root", "");
             Statement st = conexion.createStatement();
             
             ResultSet rs = st.executeQuery("SELECT * FROM clientes;");
