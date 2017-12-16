@@ -14,15 +14,15 @@ public class App {
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/spotif", "root", "");
             Statement st = conexion.createStatement();
             
-            ResultSet rs = st.executeQuery("SELECT * FROM canciones;");
+            ResultSet rs = st.executeQuery("SELECT * FROM clientes;");
  
             if (rs != null) {
                 System.out.println("El listado de la tabla clientes es:");
  
                 while (rs.next()) {
-                    System.out.println("  ID cancion: " + rs.getObject("id_cancion"));
-                    System.out.println("  Titulo: " + rs.getObject("titulo"));
-                    System.out.println("  ID album: " + rs.getObject("id_album"));
+                    System.out.println("  ID: " + rs.getObject("id"));
+                    System.out.println("  Login: " + rs.getObject("login"));
+                    System.out.println("  Contraseña: " + rs.getObject("contras"));
                 }
                 rs.close();
             }
